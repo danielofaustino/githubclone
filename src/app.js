@@ -24,6 +24,9 @@ app.post("/repositories", (request, response) => {
     techs: techs,
     likes:0
   }
+  repositories.push(repository)
+
+  return response.json(repository)
 });
 
 app.put("/repositories/:id", (request, response) => {
