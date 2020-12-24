@@ -10,6 +10,23 @@ app.use(cors());
 
 const repositories = [];
 
+//Middlewares
+
+function logRequests(request,response,next){
+
+  const { method, url } = request;  
+
+  const logLabel = `Method: [${method.toUpperCase()}]- Route: ${url}`
+
+  console.time(logLabel)
+
+  next();
+  
+  console.timeEnd(logLabel)
+}
+
+app.use(logRequests)
+
 app.get("/repositories", (request, response) => {
 
   return response.json(repositories)
