@@ -21,11 +21,23 @@ function logRequests(request,response,next){
   console.time(logLabel)
 
   next();
-  
+
   console.timeEnd(logLabel)
+
 }
 
-app.use(logRequests)
+function validateRepositoryId(request,response, next){
+  
+  const { id } = request.params;
+
+  if(!isUuid(id)) {
+    return response.status(400).json({ error: 'Invalid Repository Id.'})
+  }
+}
+
+app.use(logRequests);
+
+app.use('/repositories/:id',validateRepositoryId);
 
 app.get("/repositories", (request, response) => {
 
